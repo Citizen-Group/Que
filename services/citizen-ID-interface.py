@@ -1,8 +1,8 @@
-from services.citizen-card-fake-remote-host import CitizenFakeRemoteHost as remoteHost
+from services.citizen-ID-fake-remote-host import CitizenIDRemoteHost as remoteHost
 
 # Interface to allow access to the Remote Citizen Card Server
 
-class CitizenCardInterface():
+class CitizenIDInterface():
    
     ## Helper Functions
     # Gets a Biometic from the database for testing

@@ -25,7 +25,7 @@ import uuid
 
 # Provides a simulated Citizen Card Remote Server
 
-class CitizenFakeRemoteHost():
+class CitizenIDRemoteHost():
     # Starting DB Size
     DATABASE_SIZE = 20
     
