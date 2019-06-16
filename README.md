@@ -1,3 +1,5 @@
+![Image of QUE Logo](https://github.com/Citizen-Group/Que/blob/master/Queuelogo.png)
+
 # QUE
 QUE is a proposal to produce automation for ESO to address these time concerns. We will provide an attendance tracking system, with custom physical devices and displays. We will produce a solution that caters to the unique needs of the homeless, impoverished and thoes with physical and psychological difficulties.
 
