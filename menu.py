@@ -1,5 +1,6 @@
 import sys
-import time
+import Person
+import sys
 
 import Person
 
@@ -18,8 +19,11 @@ class menu:
             1: Add Person to Queue
             2: Remove Person From Queue
             3: View The Queue 
-            4: View The Database
-            5: Close
+            4: Call up user
+            5: View Local Queue
+            6: Check in user
+            7: Update user info
+            0: Close
 
             Please enter your choice: """)
 
@@ -32,24 +36,42 @@ class menu:
         elif choice == "3":
             self.displayQueue()
         elif choice == "4":
-            self.displayDatabase()
+            self.callUpUser()
         elif choice == "5":
+            self.displayLocalQueue()
+        elif choice == "6":
+            self.checkIn()
+        elif choice == "7":
+            self.updateUser()
+        elif choice == "0":
             sys.exit()
         else:
             print("You must only select 1-4")
             print("Please try again")
-            time.sleep(3)
+
             self.screen1()
 
 
-    def addUser(self):
+    def addUser(self,bioID= None):
         name = input("What is the user's name ")
+        reason = input("Reason for visit ")
+        position = 0
+        if self.database.isEmpty():
+            position = 1
+        else:
 
-        user = Person.person(name)
+            position = self.database.findLastPosition()
+
+
+
+        if bioID is not None:
+            user = Person.person(name,reason,position,uniqueID=bioID)
+        else:
+            user = Person.person(name,reason,position)
 
         self.queue.addperson(user)
         print("Add Complete")
-        time.sleep(2)
+
         self.screen1()
 
 
@@ -58,16 +80,39 @@ class menu:
         print(self.queue)
         id = input("Please select the id of the user you want to remove ")
         self.queue.removeperson(id)
-        time.sleep(2)
+
         self.screen1()
 
 
-    def displayDatabase(self):
-        self.database.viewDataBase()
-        time.sleep(2)
-        self.screen1()
-
-    def displayQueue(self):
+    def callUpUser(self):
         print(self.queue)
-        time.sleep(2)
+        id = input("Please select the id of the user you want to call up ")
+        if self.queue.getName(id) is not None:
+
+            print("could " + self.queue.getName(id) + " please come up to the desk")
+        else:
+            print("User not found")
+    def displayQueue(self):
+        self.database.viewDataBase()
+
+        self.screen1()
+    def displayLocalQueue(self):
+        print(self.queue)
+
+        self.screen1()
+
+    def checkIn(self):
+        user = self.database.callUp()
+        print("Now calling: " + str(user["_id"]))
+        self.queue.updateQueue()
+
+
+        self.screen1()
+
+    def updateUser(self):
+        id = input("Please enter the ID of the user you want to change")
+        spot = input("Please enter what number in line you would like to set him to")
+        self.database.changePosition(id,spot)
+        self.queue.updateQueue()
+
         self.screen1()
