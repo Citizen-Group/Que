@@ -1,6 +1,4 @@
 import sys
-import Person
-import sys
 
 import Person
 
@@ -55,6 +53,7 @@ class menu:
     def addUser(self,bioID= None):
         name = input("What is the user's name ")
         reason = input("Reason for visit ")
+        waitTime = self.database.estimateWaitTime()
         position = 0
         if self.database.isEmpty():
             position = 1
@@ -65,9 +64,9 @@ class menu:
 
 
         if bioID is not None:
-            user = Person.person(name,reason,position,uniqueID=bioID)
+            user = Person.person(name,reason,position,waitTime,uniqueID=bioID)
         else:
-            user = Person.person(name,reason,position)
+            user = Person.person(name,reason,position,waitTime)
 
         self.queue.addperson(user)
         print("Add Complete")
@@ -79,6 +78,7 @@ class menu:
     def removeUser(self):
         print(self.queue)
         id = input("Please select the id of the user you want to remove ")
+        self.database.updateWaitTime(id)
         self.queue.removeperson(id)
 
         self.screen1()

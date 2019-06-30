@@ -38,11 +38,11 @@ class database:
 
 
     def addtoqueue(self,item):
-        client = {"_id": item.userID, "name:": item.name, "reason:":item.reason, "position:": item.position, "uniqueID:": item.uniqueID, "serviceData:": item.serviceData }
+        client = {"_id": item.userID, "name:": item.name, "reason:":item.reason, "position:": item.position,"waitTime:": item.waitTime, "uniqueID:": item.uniqueID, "serviceData:": item.serviceData }
         x = self.collection.insert_one(client)
 
     def removefromqueue(self,item):
-        client = {"_id": item.userID, "name:": item.name, "reason:":item.reason, "position:": item.position,"uniqueID:": item.uniqueID,"serviceData:": item.serviceData}
+        client = {"_id": item.userID, "name:": item.name, "reason:":item.reason, "position:": item.position,"waitTime:": item.waitTime,"uniqueID:": item.uniqueID,"serviceData:": item.serviceData}
 
         y = {"_id": item.userID}
 
@@ -89,6 +89,19 @@ class database:
             if position <= x["position:"]:
                 position = x["position:"] + 1
         return position
+
+    def estimateWaitTime(self):
+        waitTime = 0
+        for x in self.collection.find():
+            waitTime = waitTime + 5
+        return waitTime
+
+    def updateWaitTime(self,id):
+        current = self.collection.find_one({"_id": int(id)})
+        for x in self.collection.find():
+            if x["position:"] > current["position:"]:
+                self.collection.update_one({"_id": x["_id"]}, {"$inc": {"waitTime:": -5}})
+
 
 
     def viewDataBase(self):

@@ -12,7 +12,7 @@ class BaseQueue():
         stringrep = ""
         for i in self.items:
 
-            stringrep = stringrep + str(i.userID) +": " + i.name + ", " + "Position: " + str(i.position) + "\n"
+            stringrep = stringrep + str(i.userID) +": " + i.name + ", " + "Position: " + str(i.position) + " Est wait time:" + str(i.waitTime) + " minutes." +  "\n"
         return stringrep
 
     def isEmpty(self):
